@@ -1,0 +1,38 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.0.RELEASE")
+    }
+}
+
+repositories {
+  mavenCentral()
+}
+
+subprojects {
+    repositories {
+        mavenCentral()
+    }
+
+   apply plugin: 'java'
+   apply plugin: 'idea'
+   apply plugin: 'spring-boot'
+
+   sourceCompatibility = 1.8
+   targetCompatibility = 1.8
+
+   dependencies {
+      compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.3.6.RELEASE'
+   }
+}
+
+tasks.create("dockerImage").dependsOn(':app1:dockerImage', ':app2:dockerImage')
+tasks.create("dockerRun").dependsOn(':app1:dockerRun', ':app2:dockerRun')
+
+
+task dockerCompose(dependsOn: 'dockerImage', type:Exec) {
+    commandLine 'docker-compose', 'build'
+    commandLine 'docker-compose', 'up'
+}

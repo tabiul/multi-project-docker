@@ -1,0 +1,11 @@
+bootRepackage {
+    mainClass = "com.app1.App1"
+}
+bootRepackage.mustRunAfter clean
+task dockerImage(dependsOn: 'bootRepackage', type:Exec) {
+    commandLine '/usr/bin/docker', 'build', '-t', 'app1:latest', '.'
+}
+
+task dockerRun(type:Exec){
+    commandLine '/usr/bin/docker','run','-p','8080','--name','app1','app1'
+}

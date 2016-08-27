@@ -1,0 +1,6 @@
+src
+build.gradle
+Dockerfile
+*.iml
+build
+!build/libs

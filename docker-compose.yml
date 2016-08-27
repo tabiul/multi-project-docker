@@ -1,0 +1,15 @@
+version: '2'
+services:
+    app1:
+        build: app1
+        ports:
+            - "8080:8080"
+        depends_on:
+            - app2
+        links:
+            - app2
+    app2:
+        build: app2
+        ports:
+            - "8090:8090"
+
